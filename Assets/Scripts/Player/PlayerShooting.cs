@@ -5,7 +5,7 @@ public class PlayerShooting : MonoBehaviour
     public int damagePerShot = 20;
     public float timeBetweenBullets = 0.15f;
     public float range = 100f;
-
+    public int ScoreUp = 0;
 
     float timer;
     Ray shootRay = new Ray();
@@ -18,7 +18,7 @@ public class PlayerShooting : MonoBehaviour
     float effectsDisplayTime = 0.2f;
 
 
-    void Awake()
+    public void Awake()
     {
         //GetMask
         shootableMask = LayerMask.GetMask("Shootable");
@@ -30,6 +30,7 @@ public class PlayerShooting : MonoBehaviour
         gunLight = GetComponent<Light>();
     }
 
+    
 
     void Update()
     {
@@ -45,6 +46,19 @@ public class PlayerShooting : MonoBehaviour
         {
             DisableEffects();
         }
+
+        //fitur_senjata
+        if(ScoreManager.score > (ScoreUp + 100))
+        {
+            ScoreUp = ScoreManager.score;
+            damagePerShot += 50;
+            if (timeBetweenBullets > 0.095)
+            {
+                timeBetweenBullets -= 0.01f;
+            }           
+        }
+
+        
     }
 
 
@@ -54,6 +68,7 @@ public class PlayerShooting : MonoBehaviour
         gunLine.enabled = false;
 
         //disable light
+        
         gunLight.enabled = false;
     }
 

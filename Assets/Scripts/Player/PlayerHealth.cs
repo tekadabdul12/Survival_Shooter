@@ -19,8 +19,8 @@ public class PlayerHealth : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerShooting playerShooting;
     bool isDead;                                                
-    bool damaged;                                               
-
+    bool damaged;
+    int ScoreUp = 0;
 
     void Awake()
     {
@@ -34,7 +34,15 @@ public class PlayerHealth : MonoBehaviour
 
 
     void Update()
-    {
+    {   //fitur_darah
+        if (ScoreManager.score > (ScoreUp + 300))
+        {
+            ScoreUp = ScoreManager.score;
+            currentHealth += 100;
+            healthSlider.value = currentHealth;
+        }
+        //end_fitur
+
         if (damaged)
         {
             damageImage.color = flashColour;
@@ -65,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    void Death()
+    public void Death()
     {
         isDead = true;
 
@@ -78,5 +86,11 @@ public class PlayerHealth : MonoBehaviour
 
         playerMovement.enabled = false;
         playerShooting.enabled = false;
+    }
+
+    public void RestartLevel()
+    {
+        // Reload the level that is currently loaded.
+        SceneManager.LoadScene(0);
     }
 }
